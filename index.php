@@ -30,13 +30,13 @@
 		$result = $pdo->prepare($sql);
 		$result ->execute();
 		$allus = $result->fetchAll(PDO::FETCH_ASSOC);
-		foreach ($allus as $allus){ ?>
+		foreach ($allus as $allus): ?>
 			<br><br>
 			<a href="myprofile.php?name=<?php echo $allus['uname']?>"><?php echo $allus['uname']?></a><br>
 			<a href="myprofile.php?name=<?php echo $allus['uname']?>"><img src="avatars/<?php echo $allus['uava']?>" width="100" height="100" alt="ava"></a><br>
 			<br> <br> <br>
 <?php
-}
+		endforeach;
 
 //pagination///
 	$num = 1;///тут указывается кол-во записей на странице
