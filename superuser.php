@@ -26,6 +26,15 @@
 					<p><strong>Название фильма:</strong></p>
 					<input type="text" name = "fname">	
 				</p>
+		      	<p>
+					<p><strong>Страна:</strong></p>
+					<input type="text" name = "fcountry">	
+				</p>
+		      	<p>
+					<p><strong>Год:</strong></p>
+					<input type="text" name = "fyear">	
+				</p>
+
 
 			
 
@@ -53,7 +62,6 @@
 					<p><strong>Постер</strong></p>
 					<input type="file" name = "fpostes">	
 				</p>
-
 				<p>
 					<p><strong>Описание</strong></p>
 					<textarea name="fabout" id="fabout" cols="30" rows="10"></textarea>	
@@ -139,7 +147,7 @@
 
 						  
 
-						      		$sql = ("INSERT INTO films SET fname='".$data['fname']."', fposter='".$fposter."',  fabout = '".$data['fabout']."', ffile = '".$data['ffile']."' ");
+						      		$sql = ("INSERT INTO films SET fname='".$data['fname']."', fposter='".$fposter."',  fabout = '".$data['fabout']."', ffile = '".$data['ffile']."', fcountry='".$data['fcountry']."', fyear='".$data['fyear']."'");
 									$result = $pdo->prepare($sql);
 									$result ->execute();
 

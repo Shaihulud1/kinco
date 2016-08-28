@@ -39,7 +39,7 @@
 		endforeach;
 
 //pagination///
-	$num = 1;///тут указывается кол-во записей на странице
+	$num = 20;///тут указывается кол-во записей на странице
 	$page = $_GET['page'];
 	$sql = ("SELECT count(*) FROM films");
 	$result = $pdo->prepare($sql);
@@ -65,7 +65,7 @@
 				<a href='movie.php?n=<?php echo $row ['fname']?>'><?php echo $row['fname']?></a><br>
 				<?php
 				//вывод жанров
-				$sql = ("SELECT fi.fname, ca.cname FROM films_categories fc
+				$sql = ("SELECT fi.fname, ca.cname, fi.fyear, fi.fcountry FROM films_categories fc
 							INNER JOIN films fi ON fc.id_film = fi.id
 							INNER JOIN categorys ca ON fc.id_cat = ca.id
 							WHERE fi.fname = '".$row['fname']."'");

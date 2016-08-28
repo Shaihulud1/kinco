@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Aug 11, 2016 at 02:01 AM
+-- Generation Time: Aug 28, 2016 at 06:49 AM
 -- Server version: 5.5.45
 -- PHP Version: 5.4.44
 
@@ -77,6 +77,8 @@ INSERT INTO `dislikes` (`id`, `id_user`, `id_film`) VALUES
 CREATE TABLE IF NOT EXISTS `films` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fname` varchar(60) NOT NULL,
+  `fyear` int(11) DEFAULT NULL,
+  `fcountry` varchar(45) NOT NULL,
   `fcategory` int(11) DEFAULT NULL,
   `fposter` varchar(60) NOT NULL,
   `flikes` int(11) NOT NULL DEFAULT '0',
@@ -91,15 +93,16 @@ CREATE TABLE IF NOT EXISTS `films` (
   KEY `fcategory_4` (`fcategory`),
   KEY `fcategory_5` (`fcategory`),
   KEY `flikes` (`flikes`,`fdislikes`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `films`
 --
 
-INSERT INTO `films` (`id`, `fname`, `fcategory`, `fposter`, `flikes`, `fdislikes`, `fabout`, `ffile`, `fraiting`) VALUES
-(1, 'Говнофильм', 2, 'Govnofilm.jpeg', 0, 0, 'Что-то там про что-то', 'D:/gada', 3),
-(6, 'Тест', NULL, 'Test.jpg', 0, 0, 'Какое-то описание', 'galaxy.jpg', 4);
+INSERT INTO `films` (`id`, `fname`, `fyear`, `fcountry`, `fcategory`, `fposter`, `flikes`, `fdislikes`, `fabout`, `ffile`, `fraiting`) VALUES
+(1, 'Говнофильм', 2014, 'Russia', 2, 'Govnofilm.jpeg', 0, 0, 'Что-то там про что-то', 'D:/gada', 3),
+(6, 'Тест', NULL, '', NULL, 'Test.jpg', 0, 0, 'Какое-то описание', 'galaxy.jpg', 4),
+(9, 'Говнофильм2', NULL, '', NULL, 'Govnofilm2.png', 0, 0, 'ОПИСАНИЕ', 'D:/gada', 0);
 
 -- --------------------------------------------------------
 
@@ -114,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `films_categories` (
   PRIMARY KEY (`id`),
   KEY `id_film` (`id_film`,`id_cat`),
   KEY `id_cat` (`id_cat`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `films_categories`
@@ -124,7 +127,8 @@ INSERT INTO `films_categories` (`id`, `id_film`, `id_cat`) VALUES
 (1, 1, 2),
 (2, 1, 3),
 (3, 6, 1),
-(4, 6, 3);
+(4, 6, 3),
+(7, 9, 3);
 
 -- --------------------------------------------------------
 

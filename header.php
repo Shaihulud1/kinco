@@ -15,6 +15,7 @@
 <form action="search.php" method = "GET">
 	<input type="text" name = "searchit" placeholder="поиск">
 	<button>Поиск</button>
+	<a href="advanced_search.php">Расширенный поиск</a>
 </form>
 
 

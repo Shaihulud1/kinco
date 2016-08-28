@@ -41,7 +41,7 @@
 <?php
 }
 ///pagination
-	$num = 1;///тут указывается кол-во записей на странице
+	$num = 20;///тут указывается кол-во записей на странице
 	$page = $_GET['page'];
 	$sql = ("SELECT count(*) FROM films_categories fc 
                             INNER JOIN films fi ON fc.id_film = fi.id

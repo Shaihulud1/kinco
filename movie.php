@@ -8,7 +8,7 @@
 
 $chosenfilm = $_GET['n'];
 
-			$sql = ("SELECT f.id, f.fname, f.fposter, f.flikes, f.fdislikes, f.fabout, f.ffile, f.fraiting FROM films f
+			$sql = ("SELECT f.id, f.fname, f.fposter, f.flikes, f.fdislikes, f.fabout, f.ffile, f.fraiting, f.fyear, f.fcountry FROM films f
 					WHERE f.fname = '".$chosenfilm."' ");
     		$result = $pdo->prepare($sql);
     		$result ->execute();
@@ -107,6 +107,8 @@ $chosenfilm = $_GET['n'];
                 <?php endforeach;?> 
 
     			<a href="movie.php?n=<?php echo $row ['fname']?>"><img src="posters/<?php echo $row['fposter']; ?>"  width="300" height="300" alt="poster_must_be_here"></a><br>
+                <p><?php echo "Год: ".$row['fyear']?><p>
+                <p><?php echo "Страна: ".$row['fcountry']?><p>
     			<p><?php echo "Описание: ".$row['fabout']?><p>
 <?php            //если пользователь уже ставил лайк, то...
 
