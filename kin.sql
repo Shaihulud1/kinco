@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Aug 28, 2016 at 06:49 AM
+-- Generation Time: Sep 14, 2016 at 06:13 AM
 -- Server version: 5.5.45
 -- PHP Version: 5.4.44
 
@@ -43,6 +43,34 @@ INSERT INTO `categorys` (`id`, `cname`) VALUES
 (3, 'Коммедия'),
 (4, 'Ужасы'),
 (5, 'Ужасы');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_movie` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_answer_user` int(11) NOT NULL DEFAULT '7777',
+  `comment` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_movie` (`id_movie`),
+  KEY `id_user` (`id_user`),
+  KEY `id_answer_user` (`id_answer_user`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `id_movie`, `id_user`, `id_answer_user`, `comment`) VALUES
+(1, 9, 3, 7777, 'adada'),
+(2, 9, 3, 7777, 'Говно'),
+(3, 9, 3, 7777, 'Норм'),
+(4, 9, 3, 7777, 'Semen,ты даун');
 
 -- --------------------------------------------------------
 
@@ -102,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `films` (
 INSERT INTO `films` (`id`, `fname`, `fyear`, `fcountry`, `fcategory`, `fposter`, `flikes`, `fdislikes`, `fabout`, `ffile`, `fraiting`) VALUES
 (1, 'Говнофильм', 2014, 'Russia', 2, 'Govnofilm.jpeg', 0, 0, 'Что-то там про что-то', 'D:/gada', 3),
 (6, 'Тест', NULL, '', NULL, 'Test.jpg', 0, 0, 'Какое-то описание', 'galaxy.jpg', 4),
-(9, 'Говнофильм2', NULL, '', NULL, 'Govnofilm2.png', 0, 0, 'ОПИСАНИЕ', 'D:/gada', 0);
+(9, 'Говнофильм2', NULL, '', NULL, 'Govnofilm2.png', 0, 0, 'ОПИСАНИЕ', 'D:/gada', 3);
 
 -- --------------------------------------------------------
 
@@ -187,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `urole` varchar(45) NOT NULL DEFAULT 'user',
   `uava` varchar(45) NOT NULL DEFAULT 'default.jpg',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
@@ -196,7 +224,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `uname`, `uemail`, `upass`, `urole`, `uava`) VALUES
 (3, 'Semen', 'sem@mail.ru', 'd9b1d7db4cd6e70935368a1efb10e377', 'admin', 'Semen.jpg'),
 (4, 'Ada', 'hell@mail.ru', '1f32aa4c9a1d2ea010adcf2348166a04', 'user', 'default.jpg'),
-(5, 'Login', 'login@mail.ru', 'd9b1d7db4cd6e70935368a1efb10e377', 'user', 'default.jpg');
+(5, 'Login', 'login@mail.ru', 'd9b1d7db4cd6e70935368a1efb10e377', 'user', 'default.jpg'),
+(7777, 'BOT', 'BOT', 'd9b1d7db4cd6e70935368a1efb10e377', 'user', 'default.jpg');
 
 -- --------------------------------------------------------
 
@@ -210,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `vote` (
   `id_film` int(11) NOT NULL,
   `uraiting` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `vote`
@@ -218,11 +247,20 @@ CREATE TABLE IF NOT EXISTS `vote` (
 
 INSERT INTO `vote` (`id`, `id_user`, `id_film`, `uraiting`) VALUES
 (15, 3, 6, 4),
-(16, 3, 1, 3);
+(16, 3, 1, 3),
+(17, 3, 9, 3);
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `user-comment-answer` FOREIGN KEY (`id_answer_user`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `film-comment` FOREIGN KEY (`id_movie`) REFERENCES `films` (`id`),
+  ADD CONSTRAINT `user-comment` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `dislikes`
