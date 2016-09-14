@@ -8,7 +8,7 @@
 
 
 
-$chosenfilm = $_GET['n'];
+$chosenfilm = htmlspecialchars($_GET['n']);
 
 			$sql = ("SELECT f.id, f.fname, f.fposter, f.flikes, f.fdislikes, f.fabout, f.ffile, f.fraiting, f.fyear, f.fcountry FROM films f
 					WHERE f.fname = '".$chosenfilm."' ");
@@ -175,10 +175,10 @@ $chosenfilm = $_GET['n'];
 
 
 <br><br><br>
-   <div class="comment_area">
+   
 <?php
 //pagination///
-  $num = 20;///тут указывается кол-во записей на странице
+  $num = 100;///тут указывается кол-во записей на странице
   $page = $_GET['page'];
   $sql = ("SELECT count(*) FROM comments comm 
                INNER JOIN users us ON us.id = comm.id_user
@@ -193,7 +193,11 @@ $chosenfilm = $_GET['n'];
   $page = intval($page);
   if(empty($page) or $page < 0) $page = 1;
   if ($page > $total) $page = $total;
-  $start = $page * $num - $num;
+  $start = $page * $num - $num;?>
+  <input id="num" type="hidden" value = "<?=$num?>">
+  <input id="start" type="hidden" value = "<?=$start?>">
+  <div class="comment_area">
+<?php
 ////////////////////////////////////////////////
       $sql = ("SELECT comm.id, comm.id_movie, comm.id_user, comm.id_answer_user, comm.comment, us.uname, us.id, fi.fname FROM comments comm 
                    INNER JOIN users us ON us.id = comm.id_user
@@ -209,6 +213,7 @@ $chosenfilm = $_GET['n'];
              <div class="msg_here"><?php echo $comment['comment'];?></div><br>
              <a id = "answer" href="<?php echo $comment['uname'];?>" onclick = "var answ_id = $(this).attr('href'); $('#answer').val(answ_id); $('#comm_text').text(answ_id + ','); return false;">Ответить</a>
          </div>
+   </div>
   <?php endforeach;?>
 <?php
  ///вывод пагинации///
@@ -241,7 +246,7 @@ $chosenfilm = $_GET['n'];
 
 
 ?>
-    </div>
+    
  <form action="" name ="comment_go">
      <textarea name="comm_text" id="comm_text" cols="20" rows="5" ></textarea><br>
      <button id = "go_comm" name = "go_comm">Отправить комментарий</button>
@@ -266,6 +271,8 @@ $(document).ready(function() {
         var user_comment = $('#id_user').val();
         var id_film = $('#id_film').val();
         var answer = $('#answer').val();
+        var num = $('#num').val();
+        var start = $('#start').val();
         $.ajax({
           type: "POST",
           url: "ajax/comment_go.php",
@@ -273,7 +280,9 @@ $(document).ready(function() {
           data: {comm_text: comm_text,
                  user_comment: user_comment,
                  id_film: id_film,
-                 answer: answer},
+                 answer: answer,
+                 start: start,
+                 num: num},
            success: function(data){
               if(data != 'Вы не ввели текст комментария' && data != 'Только зарегестрированнные пользователи могут оставлять комментарии'){
                 $('.comment_area').html(data);

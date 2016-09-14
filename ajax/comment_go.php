@@ -7,6 +7,8 @@ if(isset($_POST['comm_text'])){
 	$us_id = htmlspecialchars($_POST['user_comment']);
 	$id_film = htmlspecialchars($_POST['id_film']);
 	$answer = htmlspecialchars($_POST['answer']);
+	$num = htmlspecialchars($_POST['num']);
+	$start = htmlspecialchars($_POST['start']);
 	$err = array();
 	if($_POST['user_comment'] == ''){
 		$err[] = 'Только зарегестрированнные пользователи могут оставлять комментарии';
@@ -23,7 +25,7 @@ if(isset($_POST['comm_text'])){
 		$result ->execute();
 
 		      $sql = ("SELECT comm.id, comm.id_movie, comm.id_user, comm.id_answer_user, comm.comment, us.uname, us.id  FROM comments comm 
-		               INNER JOIN users us ON us.id = comm.id_user");
+		               INNER JOIN users us ON us.id = comm.id_user WHERE comm.id_movie ='".$id_film."' LIMIT $start, $num");
 		        $result = $pdo->prepare($sql);
 		        $result ->execute();
 		        $comments = $result->fetchAll(PDO::FETCH_ASSOC);
